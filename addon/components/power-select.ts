@@ -66,6 +66,7 @@ export interface PowerSelectArgs {
   options: any[] | PromiseProxy<any[]>
   selected: any | PromiseProxy<any>
   closeOnSelect?: boolean
+  allowGroupSearch?: boolean
   defaultHighlighted?: any
   searchField?: string
   searchEnabled?: boolean
@@ -561,7 +562,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   _filter(options: any[], term: string, skipDisabled = false): any[] {
     let matcher = this.args.matcher || defaultMatcher;
     let optionMatcher = getOptionMatcher(matcher, defaultMatcher, this.args.searchField);
-    return filterOptions(options || [], term, optionMatcher, skipDisabled);
+    return filterOptions(options || [], term, optionMatcher, skipDisabled, this.args.allowGroupSearch);
   }
 
   _updateIsActive(value: boolean) {

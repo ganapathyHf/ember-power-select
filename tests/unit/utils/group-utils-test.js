@@ -302,6 +302,22 @@ module('Unit | Utility | Group utils', function () {
   });
 });
 
+test('#filterOptions respects group search if allowGroupSearch is enabled', function (assert) {
+  let matcher = function (value, searchText) {
+    return new RegExp(searchText, 'i').test(value) ? 0 : -1;
+  };
+  let allowGroupSearch = true;
+  assert.deepEqual(
+    filterOptions(groupedOptions, 'smal', matcher, false, allowGroupSearch),
+    [{ groupName: 'Smalls', options: ['zero', 'one', 'two', 'three'] }]
+  );
+  allowGroupSearch = false;
+  assert.deepEqual(
+    filterOptions(groupedOptions, 'smal', matcher, false, allowGroupSearch),
+    []
+  );
+});
+
 test('#defaultTypeAheadMatcher', function (assert) {
   [
     ['Aaron', 'Aa'],
